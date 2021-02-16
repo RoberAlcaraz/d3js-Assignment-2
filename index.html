@@ -4,27 +4,93 @@
         <title>d3.js data driven page</title>
         <style>
             body {background-color: white;}
-            .special {color:crimson}
-            .par1 {color: black;}
-            .par2 {color: black;}
+            p {color: black;}
+            table {color: black;}
+            #Result1 {color: black; font-weight: bold;}
+            #Result2 {color: black; font-weight: bold;}
         </style>
         <script src="https://d3js.org/d3.v6.min.js"></script>
         <script>
-            function putTxt(){
-                document.getElementById("output_txt").value = document.getElementById("input_txt").value;
+            function selectData(){
+                if (document.getElementById('d1').checked){
+                    d3.csv("https://raw.githubusercontent.com/RoberAlcaraz/d3js-Assignment-2/main/data1.csv",
+                    (d, i, c) => {
+                            d3.select("table")
+                            .append("tr")
+                            .selectAll("td")
+                            .data(c).enter()
+                            .append("td")
+                            .text(x => d[x])
+                    }
+                    ); 
+                } else if (document.getElementById('d2').checked){
+                    d3.csv("https://raw.githubusercontent.com/RoberAlcaraz/d3js-Assignment-2/main/data2.csv",
+                    (d, i, c) => {
+                            d3.select("table")
+                            .append("tr")
+                            .selectAll("td")
+                            .data(c).enter()
+                            .append("td")
+                            .text(x => d[x])
+                    }
+                    );
+                }
             }
 
-            function colorR(){
-                d3.select("#id2").style("color", "red");
+            function colMean(){
+                if (document.getElementById('x').value == 'x'){
+                    alert('ok')
+                    data = d3.csv("https://raw.githubusercontent.com/RoberAlcaraz/d3js-Assignment-2/main/data1.csv")
+                    document.getElementById('Result1').innerHTML = d3.mean(data, function(d){return +d.x;})
+                    }
+                    );
+                }
+
             }
 
-            function colorB(){
-                d3.select("#id2").style("color", "blue");
-            }
+            
         </script>
     </head>
 
     <body>
+        <p>
+            In the following input you can select
+            the variable you want to show.
+        </p>
 
+        <p>
+            Choose a variable from data1 to compute 
+            the mean:
+        </p>
+        <select id="vars1" onclick="colMean()">
+            <option value="x" id = "x">x</option>
+            <option value="y" id = "y">y</option>
+        </select>
+        <div id="Result1">Result</div>
+        <br>
+        <br>
+
+        <p>
+            Choose a variable from data2 to compute 
+            the mean:
+        </p>
+        <select id="vars1">
+            <option value="length" id = "length" onclick="colMean()">length</option>
+            <option value="height" id = "height" onclick="colMean()">height</option>
+        </select>
+        <div id="Result2">Result</div>
+        <br>
+        <br>
+
+        <div class="op">
+            <input type="radio", value="d1", id="d1", onclick="document.getElementById('d2').checked = false"><label>Data 1</label><br>
+            <input type="radio", value="d2", id="d2", onclick="document.getElementById('d1').checked = false"><label>Data 2</label><br>
+        </div>
+
+
+
+        <button type="button" id="Show" onclick="selectData()">Show me the data</button><br>
+
+        <table></table>
     </body>
 </html>
