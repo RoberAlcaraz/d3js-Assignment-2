@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>d3.js data driven page</title>
+        <style>
+            body {background-color: white;}
+            .special {color:crimson}
+            .par1 {color: black;}
+            .par2 {color: black;}
+        </style>
+        <script src="https://d3js.org/d3.v6.min.js"></script>
+        <script>
+            function putTxt(){
+                document.getElementById("output_txt").value = document.getElementById("input_txt").value;
+            }
+
+            function colorR(){
+                d3.select("#id2").style("color", "red");
+            }
+
+            function colorB(){
+                d3.select("#id2").style("color", "blue");
+            }
+        </script>
+    </head>
+
+    <body>
+
+    </body>
+</html>
