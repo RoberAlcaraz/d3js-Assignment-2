@@ -5,6 +5,7 @@
         <style>
             body {background-color: white;}
             p {color: black;}
+            .special {color:crimson}
             table {color: black;}
             #Result1 {color: black; font-weight: bold;}
             #Result2 {color: black; font-weight: bold;}
@@ -44,15 +45,42 @@
 
             function colMean1(){
                 csv_url_1 = false ? "data1.csv" : "https://raw.githubusercontent.com/RoberAlcaraz/d3js-Assignment-2/main/data1.csv"
-                d3.csv(csv_url_1, function(data){ })
-                .then(function(data) {
-                    console.log(data);
-                    });
-                alert('ok')
+                d3.csv(csv_url_1).then(tidying)
+
                 if (document.getElementById('x').checked){
-                    document.getElementById('Result1').value = d3.mean(data, d => d.x);
+                    x = Array.from(new Set(data.map(e => e.x)))
+                    mean_x = d3.mean(x)
+                    document.getElementById('Result1').value = mean_x;
+                }
+
+                if (document.getElementById('y').checked){
+                    y = Array.from(new Set(data.map(e => e.y)))
+                    mean_y = d3.mean(y)
+                    document.getElementById('Result1').value = mean_y;
                 }
                
+            }
+
+            function colMean2(){
+                csv_url_2 = false ? "data2.csv" : "https://raw.githubusercontent.com/RoberAlcaraz/d3js-Assignment-2/main/data2.csv"
+                d3.csv(csv_url_2).then(tidying)
+
+                if (document.getElementById('length').checked){
+                    length = Array.from(new Set(data.map(e => e.length)))
+                    mean_length = d3.mean(length)
+                    document.getElementById('Result2').value = mean_length;
+                }
+
+                if (document.getElementById('height').checked){
+                    height = Array.from(new Set(data.map(e => e.height)))
+                    mean_height = d3.mean(height)
+                    document.getElementById('Result2').value = mean_height;
+                }
+               
+            }
+
+            function tidying(d) {
+                data = d
             }
 
             
@@ -60,9 +88,14 @@
     </head>
 
     <body>
+        <h1 class="special"> d3js dynamic HTML page 2</h1>
+        <hr color="black">
+
         <p>
-            In the following input you can select
-            the variable you want to show.
+            In the following project, you can compute the mean of the 
+            variables x and y from data1, and also the mean of the variables
+            length and height from data2. Finally, you can show the two data 
+            sets.
         </p>
 
         <p>
@@ -74,7 +107,7 @@
             <input type="checkbox", name="x", id="x", value="x"><label>x</label>
             <input type="checkbox", name="y", id="y", value="y"><label>y</label>
         </div>
-        <button type="button" onclick="colMean1()">=</button><br>
+        <button type="button" onclick="colMean1()">Mean:</button><br>
         <p>
             <output id="Result1" type="text"><br>
         <br>
@@ -86,11 +119,15 @@
             Choose a variable from data2 to compute 
             the mean:
         </p>
-        <select id="vars2">
-            <option value="length" id = "length" onclick="colMean()">length</option>
-            <option value="height" id = "height" onclick="colMean()">height</option>
-        </select>
-        <div id="Result2">Result</div>
+        <div class="op">
+            <input type="checkbox", id="length", value="length"><label>length</label>
+            <input type="checkbox", id="height", value="height"><label>height</label>
+        </div>
+        <button type="button" onclick="colMean2()">Mean:</button><br>
+        <p>
+            <output id="Result2" type="text"><br>
+        <br>
+        </p>
         <br>
         <br>
 
