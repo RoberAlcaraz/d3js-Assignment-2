@@ -12,10 +12,13 @@
         <script src="https://d3js.org/d3.v6.min.js"></script>
         <script>
             function selectData(){
+                d3.selectAll("table").remove();
                 if (document.getElementById('d1').checked){
-                    d3.csv("https://raw.githubusercontent.com/RoberAlcaraz/d3js-Assignment-2/main/data1.csv",
+                    csv_url_1 = false ? "data1.csv" : "https://raw.githubusercontent.com/RoberAlcaraz/d3js-Assignment-2/main/data1.csv"
+                    d3.csv(csv_url_1,
                     (d, i, c) => {
-                            d3.select("table")
+                            d3.select("body")
+                            .insert("table")
                             .append("tr")
                             .selectAll("td")
                             .data(c).enter()
@@ -24,9 +27,11 @@
                     }
                     ); 
                 } else if (document.getElementById('d2').checked){
-                    d3.csv("https://raw.githubusercontent.com/RoberAlcaraz/d3js-Assignment-2/main/data2.csv",
+                    csv_url_2 = false ? "data2.csv" : "https://raw.githubusercontent.com/RoberAlcaraz/d3js-Assignment-2/main/data2.csv"
+                    d3.csv(csv_url_2,
                     (d, i, c) => {
-                            d3.select("table")
+                            d3.select("body")
+                            .insert("table")
                             .append("tr")
                             .selectAll("td")
                             .data(c).enter()
@@ -37,15 +42,17 @@
                 }
             }
 
-            function colMean(){
-                if (document.getElementById('x').value == 'x'){
-                    alert('ok')
-                    data = d3.csv("https://raw.githubusercontent.com/RoberAlcaraz/d3js-Assignment-2/main/data1.csv")
-                    document.getElementById('Result1').innerHTML = d3.mean(data, function(d){return +d.x;})
-                    }
-                    );
+            function colMean1(){
+                csv_url_1 = false ? "data1.csv" : "https://raw.githubusercontent.com/RoberAlcaraz/d3js-Assignment-2/main/data1.csv"
+                d3.csv(csv_url_1, function(data){ })
+                .then(function(data) {
+                    console.log(data);
+                    });
+                alert('ok')
+                if (document.getElementById('x').checked){
+                    document.getElementById('Result1').value = d3.mean(data, d => d.x);
                 }
-
+               
             }
 
             
@@ -62,11 +69,16 @@
             Choose a variable from data1 to compute 
             the mean:
         </p>
-        <select id="vars1" onclick="colMean()">
-            <option value="x" id = "x">x</option>
-            <option value="y" id = "y">y</option>
-        </select>
-        <div id="Result1">Result</div>
+
+        <div class="op">
+            <input type="checkbox", name="x", id="x", value="x"><label>x</label>
+            <input type="checkbox", name="y", id="y", value="y"><label>y</label>
+        </div>
+        <button type="button" onclick="colMean1()">=</button><br>
+        <p>
+            <output id="Result1" type="text"><br>
+        <br>
+        </p>
         <br>
         <br>
 
@@ -74,7 +86,7 @@
             Choose a variable from data2 to compute 
             the mean:
         </p>
-        <select id="vars1">
+        <select id="vars2">
             <option value="length" id = "length" onclick="colMean()">length</option>
             <option value="height" id = "height" onclick="colMean()">height</option>
         </select>
@@ -90,7 +102,7 @@
 
 
         <button type="button" id="Show" onclick="selectData()">Show me the data</button><br>
-
         <table></table>
+
     </body>
 </html>
