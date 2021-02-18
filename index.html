@@ -48,13 +48,13 @@
                 d3.csv(csv_url_1).then(tidying)
 
                 if (document.getElementById('x').checked){
-                    x = Array.from(new Set(data.map(e => e.x)))
+                    x = Array.from(data.map(e => e.x))
                     mean_x = d3.mean(x)
                     document.getElementById('Result1').value = mean_x;
                 }
 
                 if (document.getElementById('y').checked){
-                    y = Array.from(new Set(data.map(e => e.y)))
+                    y = Array.from(data.map(e => e.y))
                     mean_y = d3.mean(y)
                     document.getElementById('Result1').value = mean_y;
                 }
@@ -66,13 +66,13 @@
                 d3.csv(csv_url_2).then(tidying)
 
                 if (document.getElementById('length').checked){
-                    length = Array.from(new Set(data.map(e => e.length)))
+                    length = Array.from(data.map(e => e.length))
                     mean_length = d3.mean(length)
                     document.getElementById('Result2').value = mean_length;
                 }
 
                 if (document.getElementById('height').checked){
-                    height = Array.from(new Set(data.map(e => e.height)))
+                    height = Array.from(data.map(e => e.height))
                     mean_height = d3.mean(height)
                     document.getElementById('Result2').value = mean_height;
                 }
